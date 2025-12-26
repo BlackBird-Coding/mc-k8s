@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: velocity
+  namespace: minecraft
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: velocity
+  template:
+    metadata:
+      labels:
+        app: velocity
+    spec:
+      containers:
+      - name: velocity
+        image: itzg/mc-proxy
+        env:
+        - name: TYPE
+          value: "VELOCITY"
+        ports:
+        - containerPort: 25565
+          name: mc-port
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config/velocity.toml
+          subPath: velocity.toml
+      volumes:
+      - name: config-volume
+        configMap:
+          name: velocity-config

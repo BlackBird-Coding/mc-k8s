@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: velocity-config
+  namespace: minecraft
+data:
+  velocity.toml: |
+    [server]
+    bind = "0.0.0.0:25565"
+    motd = "§bWelcome to MC-K8s Cluster!"
+    show-max-players = 500
+
+    [servers]
+    lobby = "lobby-service:25565"
+
+    [forced-hosts]
+    "mc.local" = ["lobby"]
+
+    [advanced]
+    player-info-forwarding-mode = "modern"
+
+    [query]
+    enabled = true
+    port = 25565
